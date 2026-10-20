@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #0F1117;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,212,170,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 100% 100%, rgba(255,107,107,0.06) 0%, transparent 60%);
+    font-family: 'DM Sans', sans-serif;
+    color: #F0F2F5;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(15,17,23,0.82);
+    backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; }
+  .logo {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    background: linear-gradient(135deg,#FF6B6B,#00D4AA);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .btn {
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: 0.2s;
+  }
+  .btn-ghost {
+    color: rgba(240,242,245,0.75);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .btn-ghost:hover { color: #fff; background: rgba(255,255,255,0.10); }
+  .btn-danger {
+    color: #FF6B6B;
+    background: rgba(255,107,107,0.08);
+    border: 1px solid rgba(255,107,107,0.28);
+  }
+  .btn-danger:hover { background: rgba(255,107,107,0.16); }
+
+  .shell {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 22px 18px 32px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+  }
+
+  .filters {
+    padding: 16px;
+    position: sticky;
+    top: 84px;
+    height: fit-content;
+  }
+  .filters h3 {
+    margin: 0 0 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 21px;
+    letter-spacing: -0.4px;
+  }
+  .fgroup { margin-bottom: 12px; }
+  .flabel {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: rgba(240,242,245,0.55);
+  }
+  .finput {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #F0F2F5;
+    border: 1px solid rgba(255,255,255,0.11);
+    background: rgba(255,255,255,0.05);
+    outline: none;
+  }
+  .finput:focus { border-color: #00D4AA; box-shadow: 0 0 0 2px rgba(0,212,170,0.12); }
+
+  .row { display: flex; align-items: center; gap: 8px; }
+  .check {
+    width: 16px; height: 16px;
+    accent-color: #00D4AA;
+  }
+  .subtle { font-size: 12px; color: rgba(240,242,245,0.45); }
+
+  .btn-primary {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(135deg,#FF6B6B,#e05555);
+  }
+
+  .content { min-width: 0; }
+  .title-wrap {
+    margin-bottom: 12px;
+    padding: 4px 4px 2px;
+  }
+
+  .top-search {
+    margin: 10px 0 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .top-search-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: #F0F2F5;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    outline: none;
+    font-size: 14px;
+  }
+  .top-search-input:focus {
+    border-color: #00D4AA;
+    box-shadow: 0 0 0 3px rgba(0,212,170,0.12);
+  }
+  .title-main {
+    margin: 0;
+    font-family: 'Syne', sans-serif;
+    font-size: 34px;
+    letter-spacing: -0.8px;
+  }
+  .title-sub {
+    margin-top: 4px;
+    color: rgba(240,242,245,0.42);
+    font-size: 14px;
+  }
+
+  #jobsContainer {
+    display: grid;
+    gap: 12px;
+  }
+
+  .job-card {
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.09);
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+  .job-card:hover {
+    border-color: rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.05);
+    transform: translateY(-1px);
+  }
+  .job-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .job-title {
+    margin: 0;
+    font-size: 18px;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: -0.2px;
+  }
+  .meta {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(240,242,245,0.6);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .pill-match {
+    color: #00D4AA;
+    background: rgba(0,212,170,0.13);
+    border: 1px solid rgba(0,212,170,0.3);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .apply-btn {
+    border: none;
+    border-radius: 9px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+    color: #fff;
+    background: linear-gradient(135deg,#FF6B6B,#e05555);
+  }
+  .apply-btn.applied {
+    background: linear-gradient(135deg,#00B894,#00D4AA);
+    cursor: not-allowed;
+  }
+
+  .expand {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.14);
+    display: none;
+    color: rgba(240,242,245,0.80);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .job-card.expanded .expand { display: block; }
+
+  .empty {
+    text-align: center;
+    padding: 52px 16px;
+    border-radius: 14px;
+    border: 1px dashed rgba(255,255,255,0.18);
+    color: rgba(240,242,245,0.35);
+  }
+
+  @media (max-width: 960px) {
+    .shell { grid-template-columns: 1fr; }
+    .filters { position: static; }
+  }
+</style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand">
+      <div class="logo">
+        <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><path d="M11 2L19.5 7V15L11 20L2.5 15V7L11 2Z" fill="rgba(15,17,23,0.9)"/></svg>
+      </div>
+      <span class="brand-title">JobBoard</span>
+    </div>
+    <div class="nav-actions">
+      <a href="profile.html" class="btn btn-ghost">My Profile</a>
+      <a href="#" class="btn btn-danger" onclick="logout(); return false;">Logout</a>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="panel filters">
+      <h3>Filters</h3>
+
+      <div class="fgroup">
+        <label class="flabel">Keyword</label>
+        <select id="fKeyword" class="finput" onchange="renderJobs()">
+          <option value="">All Skills</option>
+        </select>
+      </div>
+
+      <div class="fgroup">
+        <label class="flabel">Location</label>
+        <select id="fLocation" class="finput" onchange="renderJobs()">
+          <option value="">All Locations</option>
+        </select>
+      </div>
+
+      <div class="fgroup">
+        <label class="flabel">Minimum Salary</label>
+        <select id="fSalary" class="finput" onchange="renderJobs()">
+          <option value="0">Any Salary</option>
+          <option value="10000">10,000+</option>
+          <option value="20000">20,000+</option>
+          <option value="30000">30,000+</option>
+          <option value="50000">50,000+</option>
+          <option value="80000">80,000+</option>
+          <option value="100000">100,000+</option>
+        </select>
+      </div>
+
+      <div class="fgroup row">
+        <input id="fMatchOnly" class="check" type="checkbox">
+        <label for="fMatchOnly" class="subtle">Show matched jobs only</label>
+      </div>
+
+      <button class="btn-primary" onclick="renderJobs()">Apply Filters</button>
+      <div class="subtle" style="margin-top:10px;">Click a job card to expand details.</div>
+    </aside>
+
+    <main class="content">
+      <div class="title-wrap">
+        <h1 class="title-main">Find Your Next Role</h1>
+        <div class="title-sub" id="subtitle"></div>
+      </div>
+
+      <div class="top-search">
+        <input id="globalSearch" class="top-search-input" placeholder="Search by title, description, location..." oninput="renderJobs()">
+      </div>
+
+      <div id="jobsContainer"></div>
+    </main>
+  </div>
+
+<script>
+const API = "http://localhost:8080/api";
+const user = JSON.parse(localStorage.getItem("user"));
+let jobs = [];
+let appliedJobIds = new Set();
+
+if (!user) {
+  alert("Please login first");
+  window.location.href = "login.html";
+}
+
+document.getElementById("subtitle").textContent =
+  `${user.name || "User"} • ${user.role || "UNKNOWN"} • ${user.email || ""}`;
+
+function toSkillsArray(skills) {
+  if (!skills) return [];
+  if (Array.isArray(skills)) return skills.map(s => String(s).toLowerCase().trim()).filter(Boolean);
+  return String(skills).split(",").map(s => s.toLowerCase().trim()).filter(Boolean);
+}
+
+function extractJobText(job) {
+  return `${job.title || ""} ${job.description || ""}`.toLowerCase();
+}
+
+function calcMatchScore(job) {
+  const userSkills = toSkillsArray(user.skills);
+  if (!userSkills.length) return 0;
+  const text = extractJobText(job);
+  const matched = userSkills.filter(s => text.includes(s));
+  return Math.round((matched.length / userSkills.length) * 100);
+}
+
+function parseSalaryNumber(salary) {
+  const m = String(salary || "").replace(/,/g, "").match(/\d+/);
+  return m ? Number(m[0]) : 0;
+}
+
+async function loadAppliedJobs() {
+  try {
+    const res = await fetch(`${API}/applications/user/${user.id}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    appliedJobIds = new Set((data || []).map(a => a.jobId));
+  } catch (e) {}
+}
+
+async function loadJobs() {
+  const res = await fetch(`${API}/jobs`);
+  jobs = await res.json();
+}
+
+function passesFilters(job) {
+  const keyword = document.getElementById("fKeyword").value.trim().toLowerCase();
+  const location = document.getElementById("fLocation").value.trim().toLowerCase();
+  const minSalary = Number(document.getElementById("fSalary").value || 0);
+  const matchOnly = document.getElementById("fMatchOnly").checked;
+  const globalSearch = document.getElementById("globalSearch").value.trim().toLowerCase();
+
+  const text = extractJobText(job);
+  const score = calcMatchScore(job);
+
+  if (keyword && !text.includes(keyword)) return false;
+  if (location && !String(job.location || "").toLowerCase().includes(location)) return false;
+  if (minSalary > 0 && parseSalaryNumber(job.salary) < minSalary) return false;
+  if (globalSearch) {
+    const g = `${job.title || ""} ${job.description || ""} ${job.location || ""}`.toLowerCase();
+    if (!g.includes(globalSearch)) return false;
+  }
+  if (matchOnly && score <= 0) return false;
+
+  return true;
+}
+
+function jobCard(job) {
+  const score = calcMatchScore(job);
+  const isApplied = appliedJobIds.has(job.id);
+
+  return `
+    <article class="job-card" id="job-${job.id}" onclick="toggleExpand('${job.id}')">
+      <div class="job-top">
+        <div>
+          <h3 class="job-title">${job.title || "Untitled Role"}</h3>
+          <div class="meta">
+            <span>📍 ${job.location || "N/A"}</span>
+            <span>💰 ${job.salary || "N/A"}</span>
+          </div>
+        </div>
+        <div>
+          <span class="pill pill-match">Match ${score}%</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button
+          id="apply-${job.id}"
+          class="apply-btn ${isApplied ? "applied" : ""}"
+          onclick="event.stopPropagation(); applyJob('${job.id}')"
+          ${isApplied ? "disabled" : ""}
+        >${isApplied ? "Applied" : "Apply Now"}</button>
+      </div>
+
+      <div class="expand">
+        <strong>Job Description</strong>
+        <div style="margin-top:6px;">${job.description || "No description provided."}</div>
+        <div style="margin-top:8px;color:rgba(240,242,245,0.55);font-size:12px;">
+          Recruiter ID: ${job.recruiterId || "N/A"}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderJobs() {
+  const filtered = jobs.filter(passesFilters);
+  const el = document.getElementById("jobsContainer");
+
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty">No jobs match your current filters.</div>`;
+    return;
+  }
+
+  el.innerHTML = filtered.map(jobCard).join("");
+}
+
+function toggleExpand(jobId) {
+  const card = document.getElementById(`job-${jobId}`);
+  if (!card) return;
+  card.classList.toggle("expanded");
+}
+
+async function applyJob(jobId) {
+  if (!user || !user.id) {
+    alert("Please login first");
+    return;
+  }
+
+  if (appliedJobIds.has(jobId)) {
+    updateAppliedButton(jobId);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/applications`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ jobId, userId: user.id })
+    });
+
+    const text = await res.text();
+
+    if (!res.ok) {
+      throw new Error(text || "Failed to apply");
+    }
+
+    if (text === "ALREADY_APPLIED") {
+      appliedJobIds.add(jobId);
+      updateAppliedButton(jobId);
+      return;
+    }
+
+    appliedJobIds.add(jobId);
+    updateAppliedButton(jobId);
+  } catch (err) {
+    alert("Apply failed: " + err.message);
+  }
+}
+
+function updateAppliedButton(jobId) {
+  const btn = document.getElementById(`apply-${jobId}`);
+  if (!btn) return;
+  btn.disabled = true;
+  btn.classList.add("applied");
+  btn.textContent = "Applied";
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  window.location.href = "index.html";
+}
+
+function populateDropdowns() {
+  const keywordSelect = document.getElementById("fKeyword");
+  const locationSelect = document.getElementById("fLocation");
+
+  const keywords = new Set();
+  const locations = new Set();
+
+  jobs.forEach(job => {
+    const parts = `${job.title || ""} ${job.description || ""}`.toLowerCase().split(/[^a-z0-9+#.]+/).filter(Boolean);
+    parts.forEach(p => {
+      if (p.length >= 3) keywords.add(p);
+    });
+    if (job.location) locations.add(String(job.location).trim());
+  });
+
+  const sortedKeywords = Array.from(keywords).sort().slice(0, 120);
+  const sortedLocations = Array.from(locations).sort((a, b) => a.localeCompare(b));
+
+  sortedKeywords.forEach(k => {
+    const opt = document.createElement("option");
+    opt.value = k;
+    opt.textContent = k;
+    keywordSelect.appendChild(opt);
+  });
+
+  sortedLocations.forEach(loc => {
+    const opt = document.createElement("option");
+    opt.value = loc.toLowerCase();
+    opt.textContent = loc;
+    locationSelect.appendChild(opt);
+  });
+}
+
+(async function init(){
+  await Promise.all([loadJobs(), loadAppliedJobs()]);
+  populateDropdowns();
+  renderJobs();
+})();
+</script>
+</body>
+</html>

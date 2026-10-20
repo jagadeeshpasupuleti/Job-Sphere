@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JobSphere — Every Opportunity, Every Location</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --coral:#FF5240;--coral2:#FF7B6B;--coral-dim:rgba(255,82,64,.15);
+  --teal:#00CFC0;--teal2:#4DE8DE;--teal-dim:rgba(0,207,192,.12);
+  --char:#111318;--char2:#181D26;--char3:#1F2535;--char4:#27304A;
+  --border:#2D3855;--border2:#384260;
+  --text:#EDF2FF;--text2:#8A97BF;--text3:#4E5B80;
+  --font-head:'Syne',sans-serif;
+  --font-body:'Instrument Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--char);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:16px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 700px 500px at -5% 10%,rgba(0,207,192,.07) 0%,transparent 65%),radial-gradient(ellipse 600px 600px at 105% 85%,rgba(255,82,64,.09) 0%,transparent 65%),radial-gradient(ellipse 500px 400px at 50% 50%,rgba(31,37,53,.85) 0%,transparent 100%)}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px}
+.wrap{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:0 2rem}
+nav{position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(45,56,85,.8);backdrop-filter:blur(18px);background:rgba(17,19,24,.7)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin:0 auto;padding:.9rem 2rem}
+.logo{font-family:var(--font-head);font-size:1.35rem;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:.35rem}
+.logo-sphere{width:28px;height:28px;border-radius:50%;background:conic-gradient(from 0deg,var(--coral),var(--teal),var(--coral));display:inline-block;flex-shrink:0;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.logo-text{color:var(--text)}.logo-text span{color:var(--coral)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.nav-tag{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(0,207,192,.25);padding:.22rem .75rem;border-radius:100px;display:none}
+@media(min-width:600px){.nav-tag{display:block}}
+.btn{font-family:var(--font-body);font-size:.88rem;font-weight:600;padding:.55rem 1.4rem;border-radius:10px;border:none;cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);letter-spacing:.01em;text-decoration:none;display:inline-block}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--char3);color:var(--text);border-color:var(--border2)}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 0 24px rgba(255,82,64,.3)}.btn-coral:hover{background:var(--coral2);transform:translateY(-1px);box-shadow:0 0 36px rgba(255,82,64,.4)}.btn-coral:active{transform:none}
+.btn-teal{background:transparent;color:var(--teal);border:1.5px solid rgba(0,207,192,.35)}.btn-teal:hover{background:var(--teal-dim);border-color:var(--teal);transform:translateY(-1px)}
+.hero{padding:5.5rem 0 3rem;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;gap:.55rem;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(0,207,192,.22);background:var(--teal-dim);padding:.3rem 1rem;border-radius:100px;margin-bottom:2rem;animation:fadeup .6s ease both}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:var(--font-head);font-size:clamp(2.6rem,7vw,5.2rem);font-weight:800;line-height:1.04;letter-spacing:-.035em;max-width:820px;margin:0 auto 1.6rem;animation:fadeup .7s .08s ease both}
+.grad-coral{background:linear-gradient(110deg,var(--coral),#FF9080);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-teal{background:linear-gradient(110deg,var(--teal),#80FFF8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.12rem;color:var(--text2);max-width:600px;margin:0 auto 2.4rem;line-height:1.75;font-weight:300;animation:fadeup .7s .16s ease both}
+.hero-desc strong{color:var(--text);font-weight:500}
+.cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;animation:fadeup .7s .24s ease both;margin-bottom:3.5rem}
+.cta-row .btn{padding:.75rem 2rem;font-size:.95rem;border-radius:12px}
+.search-bar{display:flex;align-items:center;background:var(--char3);border:1px solid var(--border);border-radius:14px;max-width:680px;margin:0 auto 3.5rem;overflow:hidden;transition:border-color .2s;animation:fadeup .7s .32s ease both}
+.search-bar:focus-within{border-color:var(--teal)}
+.search-seg{flex:1;display:flex;align-items:center;gap:.6rem;padding:.85rem 1.2rem;border-right:1px solid var(--border)}.search-seg:last-of-type{border-right:none}
+.search-icon{font-size:.9rem;opacity:.5}
+.search-seg input{background:none;border:none;outline:none;font-family:var(--font-body);font-size:.9rem;color:var(--text);width:100%}
+.search-seg input::placeholder{color:var(--text3)}
+.search-btn{background:var(--coral);color:#fff;border:none;cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:.85rem;letter-spacing:.04em;padding:.85rem 1.6rem;white-space:nowrap;transition:background .2s}.search-btn:hover{background:var(--coral2)}
+.stats-row{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;animation:fadeup .7s .4s ease both;margin-bottom:5rem}
+.stat-chip{display:flex;align-items:center;gap:.6rem;padding:.55rem 1.1rem;border-radius:100px;background:var(--char3);border:1px solid var(--border);font-size:.82rem}
+.chip-dot{width:7px;height:7px;border-radius:50%}.cd-coral{background:var(--coral);box-shadow:0 0 8px var(--coral)}.cd-teal{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.stat-chip b{font-weight:600;color:var(--text);font-family:var(--font-head)}.stat-chip span{color:var(--text2)}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.75rem 0;margin-bottom:5rem;background:var(--char2)}
+.marquee-track{display:flex;gap:2rem;animation:marquee 30s linear infinite;white-space:nowrap}.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:0 .5rem}
+.marquee-item .mi-dot{width:5px;height:5px;border-radius:50%;background:var(--border2)}
+.section-kicker{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin-bottom:.6rem}
+.section-title{font-family:var(--font-head);font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.8rem;line-height:1.1}
+.section-sub{font-size:1rem;color:var(--text2);max-width:500px;line-height:1.7;font-weight:300}
+.categories{padding:0 0 5rem}.categories-header{text-align:center;margin-bottom:3rem}.categories-header .section-sub{margin:0 auto}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.cat-card{background:var(--char3);border:1px solid var(--border);border-radius:16px;padding:1.4rem 1.4rem 1.2rem;transition:all .28s cubic-bezier(.4,0,.2,1);cursor:pointer;position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cat-color,var(--coral)),transparent);opacity:0;transition:opacity .28s}
+.cat-card:hover{transform:translateY(-5px);border-color:var(--cat-color,var(--coral));background:var(--char4);box-shadow:0 16px 40px rgba(0,0,0,.35)}.cat-card:hover::before{opacity:1}
+.cat-icon{font-size:1.6rem;margin-bottom:.9rem}.cat-name{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.cat-count{font-size:.8rem;color:var(--text2)}.cat-count b{color:var(--cat-color,var(--coral));font-weight:600}
+.cat-arrow{position:absolute;bottom:1.2rem;right:1.2rem;width:26px;height:26px;border-radius:50%;background:var(--cat-color-dim,var(--coral-dim));display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--cat-color,var(--coral));opacity:0;transition:opacity .25s}.cat-card:hover .cat-arrow{opacity:1}
+.how-section{padding:0 0 5.5rem}
+.how-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+@media(max-width:720px){.how-inner{grid-template-columns:1fr}}
+.how-steps{margin-top:2.5rem;display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;gap:1.2rem;padding-bottom:2rem;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;left:19px;top:44px;bottom:0;width:1px;background:linear-gradient(var(--border2),transparent)}
+.step-num{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:800;font-size:.9rem}
+.sn-coral{background:var(--coral);color:#fff;box-shadow:0 0 20px rgba(255,82,64,.35)}.sn-teal{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}.sn-outline{background:var(--char3);color:var(--text2);border:1px solid var(--border)}
+.step-title{font-family:var(--font-head);font-weight:700;font-size:1rem;margin-bottom:.35rem}.step-desc{font-size:.88rem;color:var(--text2);line-height:1.65}
+.platform-card{background:var(--char3);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.pc-header{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;background:var(--char2);border-bottom:1px solid var(--border)}
+.pc-dot{width:9px;height:9px;border-radius:50%}.pd1{background:#FF5F57}.pd2{background:#FEBC2E}.pd3{background:#28C840}
+.pc-title{flex:1;text-align:center;font-size:.75rem;color:var(--text3);font-weight:500;letter-spacing:.05em}
+.pc-body{padding:1.25rem}
+.job-listing{display:flex;gap:1rem;padding:.9rem;background:var(--char2);border-radius:12px;border:1px solid var(--border);margin-bottom:.75rem;transition:border-color .2s;cursor:pointer;align-items:flex-start}.job-listing:hover{border-color:var(--border2)}
+.job-logo{width:40px;height:40px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700}
+.jl-body{flex:1}.jl-role{font-size:.88rem;font-weight:600;font-family:var(--font-head);margin-bottom:.2rem}
+.jl-meta{font-size:.75rem;color:var(--text2);display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.jl-tag{font-size:.67rem;font-weight:600;letter-spacing:.06em;padding:.15rem .5rem;border-radius:6px;text-transform:uppercase}
+.tag-ft{background:rgba(0,207,192,.1);color:var(--teal);border:1px solid rgba(0,207,192,.2)}.tag-pt{background:rgba(255,82,64,.1);color:var(--coral);border:1px solid rgba(255,82,64,.2)}
+.jl-salary{font-size:.75rem;font-weight:600;color:var(--teal);white-space:nowrap}.jl-location{font-size:.72rem;color:var(--text3)}.jl-ago{font-size:.7rem;color:var(--text3);margin-left:auto;white-space:nowrap}
+.pc-apply-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.pc-match{font-size:.78rem;color:var(--text2)}.pc-match b{color:var(--teal)}
+.context-strip{background:var(--char2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3.5rem 0;margin-bottom:5rem}
+.cs-inner{max-width:1160px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem}
+@media(max-width:700px){.cs-inner{grid-template-columns:1fr}}
+.cs-block{padding:0 1rem;border-right:1px solid var(--border)}.cs-block:last-child{border-right:none}
+.cs-quote{font-size:.95rem;color:var(--text);line-height:1.7;font-weight:300;font-style:italic;margin-bottom:1rem}
+.cs-quote::before{content:'\201C';color:var(--coral);font-size:1.4rem;line-height:0;vertical-align:-.4em;margin-right:.2rem}
+.cs-who{display:flex;align-items:center;gap:.65rem}
+.cs-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;font-family:var(--font-head);flex-shrink:0}
+.av1{background:var(--coral-dim);color:var(--coral)}.av2{background:var(--teal-dim);color:var(--teal)}.av3{background:rgba(138,151,191,.12);color:var(--text2)}
+.cs-name{font-size:.82rem;font-weight:600}.cs-role{font-size:.74rem;color:var(--text3)}
+.features{padding:0 0 5.5rem}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem;margin-top:3rem}
+.feat-card{background:var(--char3);border:1px solid var(--border);border-radius:18px;padding:1.6rem 1.6rem 1.4rem;transition:all .28s ease;position:relative;overflow:hidden}
+.feat-card::after{content:'';position:absolute;inset:0;border-radius:18px;background:radial-gradient(ellipse 160% 120% at 50% 120%,var(--fc-glow,rgba(255,82,64,.06)),transparent 70%);pointer-events:none;transition:opacity .3s;opacity:0}
+.feat-card:hover{transform:translateY(-4px);border-color:var(--fc-accent,var(--coral));box-shadow:0 18px 44px rgba(0,0,0,.3)}.feat-card:hover::after{opacity:1}
+.fc-coral{--fc-accent:var(--coral);--fc-glow:rgba(255,82,64,.09)}.fc-teal{--fc-accent:var(--teal);--fc-glow:rgba(0,207,192,.09)}
+.feat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.1rem}
+.fi-coral{background:rgba(255,82,64,.1);border:1px solid rgba(255,82,64,.18)}.fi-teal{background:rgba(0,207,192,.09);border:1px solid rgba(0,207,192,.18)}
+.feat-card h3{font-family:var(--font-head);font-weight:700;font-size:1.02rem;margin-bottom:.5rem}.feat-card p{font-size:.88rem;color:var(--text2);line-height:1.68}
+.tech-section{padding:0 0 5rem;text-align:center}
+.tech-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:2rem}
+.tech-tag{font-size:.78rem;font-weight:500;padding:.35rem .9rem;border-radius:8px;border:1px solid var(--border);color:var(--text2);background:var(--char3)}
+.tech-tag.hl{color:var(--teal);border-color:rgba(0,207,192,.3);background:var(--teal-dim)}
+.cta-banner{position:relative;z-index:1;background:var(--char2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
+.cta-banner::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 120% at 0% 50%,rgba(255,82,64,.08),transparent 60%),radial-gradient(ellipse 60% 120% at 100% 50%,rgba(0,207,192,.07),transparent 60%)}
+.cta-banner-inner{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:5rem 2rem;text-align:center}
+.cta-banner h2{font-family:var(--font-head);font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:1.2rem}
+.cta-banner p{font-size:1.05rem;color:var(--text2);font-weight:300;max-width:480px;margin:0 auto 2.4rem;line-height:1.75}
+.cta-banner-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+.cta-banner-btns .btn{padding:.8rem 2.2rem;font-size:.95rem;border-radius:12px}
+.cta-divider{display:flex;align-items:center;gap:1rem;margin:2rem auto 0;max-width:360px}
+.cta-divider-line{flex:1;height:1px;background:var(--border)}
+.cta-divider span{font-size:.72rem;color:var(--text3);white-space:nowrap;letter-spacing:.08em;text-transform:uppercase}
+.employer-nudge{margin-top:1.4rem;font-size:.88rem;color:var(--text2)}
+.employer-nudge a{color:var(--coral);text-decoration:underline;text-underline-offset:3px;cursor:pointer}.employer-nudge a:hover{color:var(--coral2)}
+footer{border-top:1px solid var(--border);background:var(--char2);padding:3rem 0 0;position:relative;z-index:1}
+.footer-top{max-width:1160px;margin:0 auto;padding:0 2rem 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+@media(max-width:820px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.footer-top{grid-template-columns:1fr}}
+.footer-brand p{font-size:.85rem;color:var(--text3);line-height:1.7;max-width:280px;margin:.75rem 0 1.5rem}
+.footer-social{display:flex;gap:.6rem}
+.social-btn{width:34px;height:34px;border-radius:8px;background:var(--char3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.75rem;cursor:pointer;transition:all .2s;color:var(--text2);text-decoration:none;font-family:var(--font-head);font-weight:700}
+.social-btn:hover{background:var(--char4);border-color:var(--border2);color:var(--text)}
+.footer-col h4{font-family:var(--font-head);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-col ul li a{font-size:.85rem;color:var(--text3);text-decoration:none;transition:color .2s;cursor:pointer}.footer-col ul li a:hover{color:var(--text)}
+.fbadge{font-size:.65rem;background:var(--coral-dim);color:var(--coral);border:1px solid rgba(255,82,64,.2);padding:.1rem .4rem;border-radius:4px;margin-left:.4rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+.footer-bottom{border-top:1px solid var(--border);max-width:1160px;margin:0 auto;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.78rem;color:var(--text3);line-height:1.6}.footer-copy b{color:var(--text2);font-weight:500}
+.footer-pills{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.footer-pill{font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.22rem .65rem;border-radius:6px;border:1px solid var(--border);color:var(--text3)}
+.footer-pill.hl{color:var(--teal);border-color:rgba(0,207,192,.25);background:var(--teal-dim)}
+.back-top{position:fixed;bottom:1.8rem;right:1.8rem;z-index:200;width:40px;height:40px;border-radius:10px;background:var(--char3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;color:var(--text2);transition:all .25s;opacity:0;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.35)}
+.back-top.show{opacity:1;pointer-events:all}.back-top:hover{background:var(--coral);color:#fff;border-color:var(--coral);transform:translateY(-2px)}
+@keyframes fadeup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-sphere"></span><span class="logo-text">Job<span>Sphere</span></span></div>
+    <div class="nav-right">
+      <span class="nav-tag">Final Year Project &middot; MCA 2026</span>
+      <button class="btn btn-ghost" onclick="goLogin()">Login</button>
+      <button class="btn btn-coral" onclick="goRegister()">Register Free</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-tag"><span class="hero-tag-dot"></span>Built with Spring Boot &middot; Java Full Stack &middot; Real Opportunities</div>
+    <h1>Every Job.<br><span class="grad-coral">Every Location.</span><br><span class="grad-teal">Every Opportunity Matters.</span></h1>
+    <p class="hero-desc">JobSphere is a <strong>full-stack Java + Spring Boot</strong> platform that bridges job seekers and employers across <strong>every industry and every city</strong> &mdash; from software roles in Bengaluru to factory floor leads in Coimbatore, warehouse staff in Hyderabad to chefs in Chennai. If it&rsquo;s a job, it belongs here.</p>
+    <div class="cta-row">
+      <button class="btn btn-coral" onclick="goRegister()">Get Started &mdash; It&rsquo;s Free</button>
+      <button class="btn btn-teal" onclick="goLogin()">Sign In</button>
+    </div>
+    <div class="search-bar">
+      <div class="search-seg"><span class="search-icon">&#128269;</span><input type="text" placeholder="Job title, skill, or keyword&hellip;"/></div>
+      <div class="search-seg"><span class="search-icon">&#128205;</span><input type="text" placeholder="City, state, or remote"/></div>
+      <button class="search-btn" onclick="goRegister()">Search Jobs</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-chip"><span class="chip-dot cd-coral"></span><b>18,400+</b><span>Live Jobs</span></div>
+      <div class="stat-chip"><span class="chip-dot cd-teal"></span><b>3,200+</b><span>Verified Employers</span></div>
+      <div class="stat-chip"><span class="chip-dot cd-coral"></span><b>42</b><span>Industries</span></div>
+      <div class="stat-chip"><span class="chip-dot cd-teal"></span><b>680+</b><span>Cities Covered</span></div>
+      <div class="stat-chip"><span class="chip-dot cd-coral"></span><b>12,000+</b><span>Hires Made</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap"><div class="marquee-track" id="mq"></div></div>
+
+<section class="categories reveal">
+  <div class="wrap">
+    <div class="categories-header">
+      <p class="section-kicker">Browse by Category</p>
+      <h2 class="section-title">Not Just IT. Every Kind of Work.</h2>
+      <p class="section-sub">From skilled trades to creative fields, from agriculture to aerospace &mdash; if people do it for a living, you&rsquo;ll find it here.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" style="--cat-color:var(--teal);--cat-color-dim:var(--teal-dim)" onclick="goRegister()"><div class="cat-icon">&#128187;</div><div class="cat-name">Information Technology</div><div class="cat-count"><b>4,280</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#FF9F40;--cat-color-dim:rgba(255,159,64,.12)" onclick="goRegister()"><div class="cat-icon">&#127959;&#65039;</div><div class="cat-name">Construction &amp; Civil</div><div class="cat-count"><b>2,145</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#4ECDC4;--cat-color-dim:rgba(78,205,196,.12)" onclick="goRegister()"><div class="cat-icon">&#127973;</div><div class="cat-name">Healthcare &amp; Pharma</div><div class="cat-count"><b>1,890</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:var(--coral);--cat-color-dim:var(--coral-dim)" onclick="goRegister()"><div class="cat-icon">&#127859;</div><div class="cat-name">Hospitality &amp; Food</div><div class="cat-count"><b>1,650</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#A78BFA;--cat-color-dim:rgba(167,139,250,.12)" onclick="goRegister()"><div class="cat-icon">&#127891;</div><div class="cat-name">Education &amp; Training</div><div class="cat-count"><b>1,430</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#34D399;--cat-color-dim:rgba(52,211,153,.12)" onclick="goRegister()"><div class="cat-icon">&#127806;</div><div class="cat-name">Agriculture &amp; Farm</div><div class="cat-count"><b>980</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#F59E0B;--cat-color-dim:rgba(245,158,11,.12)" onclick="goRegister()"><div class="cat-icon">&#128666;</div><div class="cat-name">Logistics &amp; Transport</div><div class="cat-count"><b>2,010</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+      <div class="cat-card" style="--cat-color:#F472B6;--cat-color-dim:rgba(244,114,182,.12)" onclick="goRegister()"><div class="cat-icon">&#127912;</div><div class="cat-name">Design &amp; Creative</div><div class="cat-count"><b>760</b> open roles</div><div class="cat-arrow">&#8594;</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section reveal">
+  <div class="wrap">
+    <div class="how-inner">
+      <div class="how-left">
+        <p class="section-kicker">How It Works</p>
+        <h2 class="section-title">From Profile to Offer in Days</h2>
+        <p class="section-sub">Designed for speed and simplicity. Whether you&rsquo;re a fresher looking for your first break or a seasoned professional ready to switch &mdash; the process is the same.</p>
+        <div class="how-steps">
+          <div class="step-item"><div class="step-num sn-coral">01</div><div class="step-body"><div class="step-title">Create Your Profile</div><p class="step-desc">Register as a Job Seeker or Employer. Build a smart profile &mdash; upload your resume, skills, location, and preferred work type (full-time, part-time, remote, contract).</p></div></div>
+          <div class="step-item"><div class="step-num sn-teal">02</div><div class="step-body"><div class="step-title">Discover Matching Opportunities</div><p class="step-desc">Our Spring Boot-powered matching engine surfaces jobs relevant to your role, location, and industry &mdash; not just in IT. Browse, filter, and save listings instantly.</p></div></div>
+          <div class="step-item"><div class="step-num sn-outline">03</div><div class="step-body"><div class="step-title">Apply with One Click</div><p class="step-desc">Your profile is your application. Employers receive it in real time via our REST API backend. No re-typing, no PDFs, just direct connection.</p></div></div>
+          <div class="step-item"><div class="step-num sn-coral">04</div><div class="step-body"><div class="step-title">Get Hired &amp; Track Progress</div><p class="step-desc">Both sides get a live dashboard &mdash; job seekers track application status, interview invites, and offers. Employers manage candidates through a recruitment pipeline.</p></div></div>
+        </div>
+      </div>
+      <div class="how-right">
+        <div class="platform-card">
+          <div class="pc-header"><div class="pc-dot pd1"></div><div class="pc-dot pd2"></div><div class="pc-dot pd3"></div><div class="pc-title">jobsphere.app &mdash; Live Listings</div></div>
+          <div class="pc-body">
+            <div class="job-listing" onclick="goRegister()"><div class="job-logo" style="background:rgba(0,207,192,.12);color:var(--teal)">TC</div><div class="jl-body"><div class="jl-role">Java Backend Engineer</div><div class="jl-meta"><span class="jl-tag tag-ft">Full-time</span><span class="jl-location">Hyderabad</span><span class="jl-salary">&#8377;12&ndash;18 LPA</span><span class="jl-ago">2h ago</span></div></div></div>
+            <div class="job-listing" onclick="goRegister()"><div class="job-logo" style="background:rgba(255,82,64,.12);color:var(--coral)">BF</div><div class="jl-body"><div class="jl-role">Site Supervisor &mdash; Construction</div><div class="jl-meta"><span class="jl-tag tag-ft">Full-time</span><span class="jl-location">Pune</span><span class="jl-salary">&#8377;4.5&ndash;6 LPA</span><span class="jl-ago">5h ago</span></div></div></div>
+            <div class="job-listing" onclick="goRegister()"><div class="job-logo" style="background:rgba(167,139,250,.12);color:#A78BFA">HL</div><div class="jl-body"><div class="jl-role">Head Chef &mdash; Multi-Cuisine</div><div class="jl-meta"><span class="jl-tag tag-ft">Full-time</span><span class="jl-location">Chennai</span><span class="jl-salary">&#8377;3.5&ndash;5 LPA</span><span class="jl-ago">1d ago</span></div></div></div>
+            <div class="job-listing" onclick="goRegister()"><div class="job-logo" style="background:rgba(52,211,153,.12);color:#34D399">GR</div><div class="jl-body"><div class="jl-role">Delivery Driver &mdash; Last Mile</div><div class="jl-meta"><span class="jl-tag tag-pt">Part-time</span><span class="jl-location">Bengaluru</span><span class="jl-salary">&#8377;18k&ndash;22k/mo</span><span class="jl-ago">3h ago</span></div></div></div>
+            <div class="job-listing" onclick="goRegister()"><div class="job-logo" style="background:rgba(245,158,11,.12);color:#F59E0B">SK</div><div class="jl-body"><div class="jl-role">Primary School Teacher</div><div class="jl-meta"><span class="jl-tag tag-ft">Full-time</span><span class="jl-location">Coimbatore</span><span class="jl-salary">&#8377;2.8&ndash;4 LPA</span><span class="jl-ago">6h ago</span></div></div></div>
+            <div class="pc-apply-row"><span class="pc-match">Showing <b>5 of 18,400+</b> live jobs</span><button class="btn btn-coral" style="font-size:.78rem;padding:.45rem 1rem;border-radius:8px" onclick="goRegister()">See All &rarr;</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="context-strip reveal">
+  <div class="cs-inner">
+    <div class="cs-block"><p class="cs-quote">I&rsquo;m a welder from Visakhapatnam. Found a contractor job in 3 days. Nobody told me a website could do that for someone like me.</p><div class="cs-who"><div class="cs-avatar av1">RK</div><div><div class="cs-name">Ravi Kumar</div><div class="cs-role">Welder &middot; Vizag</div></div></div></div>
+    <div class="cs-block"><p class="cs-quote">We posted 12 roles &mdash; warehouse staff, drivers, and supervisors. Filled all 12 in under two weeks. The reach across cities was exceptional.</p><div class="cs-who"><div class="cs-avatar av2">PM</div><div><div class="cs-name">Priya M., HR Lead</div><div class="cs-role">Agri-Logistics Firm &middot; Nashik</div></div></div></div>
+    <div class="cs-block"><p class="cs-quote">As a nursing graduate I was only finding pharma company ads online. Here I found actual hospital openings nearby. Makes a real difference.</p><div class="cs-who"><div class="cs-avatar av3">DF</div><div><div class="cs-name">Divya F.</div><div class="cs-role">Registered Nurse &middot; Madurai</div></div></div></div>
+  </div>
+</div>
+
+<section class="features reveal">
+  <div class="wrap">
+    <p class="section-kicker">Platform Capabilities</p>
+    <h2 class="section-title">What Powers JobSphere</h2>
+    <div class="feat-grid">
+      <div class="feat-card fc-teal"><div class="feat-icon fi-teal">&#9881;&#65039;</div><h3>Spring Boot REST API</h3><p>All core operations &mdash; job posting, application, search, user management &mdash; run through a clean REST API layer backed by Spring Security and JWT authentication.</p></div>
+      <div class="feat-card fc-coral"><div class="feat-icon fi-coral">&#128506;&#65039;</div><h3>Location-Aware Search</h3><p>Search by city, district, or pin code. Supports jobs across 680+ Indian cities with distance-based relevance ranking so nearby opportunities always surface first.</p></div>
+      <div class="feat-card fc-teal"><div class="feat-icon fi-teal">&#128100;</div><h3>Dual-Role Accounts</h3><p>One platform, two experiences. Job seekers get a smart resume and application tracker. Employers get a full recruitment dashboard with applicant pipeline management.</p></div>
+      <div class="feat-card fc-coral"><div class="feat-icon fi-coral">&#128274;</div><h3>Secure Auth with JWT</h3><p>Role-based access control with Spring Security. Stateless sessions via JSON Web Tokens. All data exchanges are protected and user roles are enforced at every endpoint.</p></div>
+      <div class="feat-card fc-teal"><div class="feat-icon fi-teal">&#128202;</div><h3>Recruiter Analytics</h3><p>Employers see views, applications, and shortlist conversions in real time. Understand which roles attract talent and where candidates are dropping off.</p></div>
+      <div class="feat-card fc-coral"><div class="feat-icon fi-coral">&#128241;</div><h3>Responsive for All Devices</h3><p>Fully responsive frontend. Works seamlessly on mobile &mdash; because most job seekers in India access the web on their phones, not desktops.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tech-section reveal">
+  <div class="wrap">
+    <p class="section-kicker">Built With</p>
+    <h2 class="section-title">Full-Stack Java + Spring Boot Architecture</h2>
+    <p class="section-sub" style="margin:0 auto .5rem">A production-grade architecture that demonstrates real enterprise patterns &mdash; not a prototype.</p>
+    <div class="tech-tags">
+      <span class="tech-tag hl">Java 17</span><span class="tech-tag hl">Spring Boot 3</span><span class="tech-tag hl">Spring Security</span><span class="tech-tag hl">Spring Data JPA</span><span class="tech-tag hl">JWT Auth</span>
+      <span class="tech-tag">MySQL / PostgreSQL</span><span class="tech-tag">Hibernate ORM</span><span class="tech-tag">REST API</span><span class="tech-tag">Thymeleaf / React</span><span class="tech-tag">Maven</span>
+      <span class="tech-tag">Lombok</span><span class="tech-tag">HTML5 / CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Deployed on AWS EC2</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner reveal">
+  <div class="cta-banner-inner">
+    <h2>Your Next Opportunity<br><span class="grad-coral">is Already Here.</span></h2>
+    <p>Join thousands of job seekers and employers across India. Create your free account in under 2 minutes &mdash; no credit card, no hidden fees.</p>
+    <div class="cta-banner-btns">
+      <button class="btn btn-coral" onclick="goRegister()">Create Free Account &rarr;</button>
+      <button class="btn btn-ghost" onclick="goLogin()">I Already Have an Account</button>
+    </div>
+    <div class="cta-divider">
+      <div class="cta-divider-line"></div>
+      <span>Are you hiring?</span>
+      <div class="cta-divider-line"></div>
+    </div>
+    <p class="employer-nudge">Post your first job free. <a onclick="goRegister()">Register as an Employer &rarr;</a></p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-sphere"></span><span class="logo-text">Job<span>Sphere</span></span></div>
+      <p>A full-stack Java + Spring Boot job platform built to connect every worker with every opportunity &mdash; across all industries, all cities, all of India.</p>
+      <div class="footer-social">
+        <a class="social-btn" title="GitHub">GH</a>
+        <a class="social-btn" title="LinkedIn">in</a>
+        <a class="social-btn" title="Email">&#9993;</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>For Job Seekers</h4>
+      <ul>
+        <li><a onclick="goRegister()">Create Profile</a></li>
+        <li><a onclick="goRegister()">Browse Jobs</a></li>
+        <li><a onclick="goRegister()">Search by Location</a></li>
+        <li><a onclick="goRegister()">My Applications</a></li>
+        <li><a onclick="goRegister()">Saved Listings</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>For Employers</h4>
+      <ul>
+        <li><a onclick="goRegister()">Post a Job <span class="fbadge">Free</span></a></li>
+        <li><a onclick="goRegister()">Manage Listings</a></li>
+        <li><a onclick="goRegister()">Applicant Pipeline</a></li>
+        <li><a onclick="goRegister()">Recruiter Dashboard</a></li>
+        <li><a onclick="goRegister()">Analytics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Project</h4>
+      <ul>
+        <li><a>About JobSphere</a></li>
+        <li><a>Tech Architecture</a></li>
+        <li><a>API Documentation</a></li>
+        <li><a>GitHub Repository</a></li>
+        <li><a>Project Report</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 <b>JobSphere</b> &mdash; Final Year Project &middot; MCA-2026 Final Year Project &middot; Built with Spring Boot, Java 17, REST APIs, and a lot of &#9749;</div>
+    <div class="footer-pills">
+      <span class="footer-pill hl">Spring Boot</span>
+      <span class="footer-pill hl">Java 17</span>
+      <span class="footer-pill">MCA 2026</span>
+      <span class="footer-pill">Final Year Project</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+function goLogin()    { window.location.href = "login.html"; }
+function goRegister() { window.location.href = "register.html"; }
+
+/* Marquee */
+const items = ["18,400+ Live Jobs","Hyderabad","Bengaluru","Chennai","Pune","Mumbai","IT & Software","Construction","Healthcare","Hospitality","Education","Logistics","Agriculture","Manufacturing","Design & Creative","Full-time","Part-time","Remote","Contract","Freshers Welcome","Verified Employers","3,200+ Companies","680+ Cities","42 Industries","Spring Boot Powered","JWT Auth","REST API","Java 17"];
+const track = document.getElementById('mq');
+[...items,...items].forEach(t => {
+  const s = document.createElement('span');
+  s.className = 'marquee-item';
+  s.innerHTML = t + '<span class="mi-dot"></span>';
+  track.appendChild(s);
+});
+
+/* Scroll Reveal */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+}, {threshold:0.1, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* Back to Top */
+const bt = document.getElementById('backTop');
+window.addEventListener('scroll', () => bt.classList.toggle('show', scrollY > 500), {passive:true});
+
+/* Search Enter */
+document.querySelectorAll('.search-seg input').forEach(i => i.addEventListener('keydown', e => { if(e.key==='Enter') goRegister(); }));
+</script>
+</body>
+</html>

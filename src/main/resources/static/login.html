@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;min-height:100vh;background-color:#0F1117;background-image:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,212,170,0.12) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 100% 100%,rgba(255,107,107,0.08) 0%,transparent 60%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;">
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div style="width:100%;max-width:420px;padding:20px;">
+
+  <!-- Card -->
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:48px 40px;backdrop-filter:blur(20px);box-shadow:0 32px 64px rgba(0,0,0,0.4),0 0 0 1px rgba(0,212,170,0.05) inset;">
+
+    <!-- Logo mark -->
+    <div style="width:48px;height:48px;background:linear-gradient(135deg,#FF6B6B,#00D4AA);border-radius:14px;margin-bottom:32px;display:flex;align-items:center;justify-content:center;">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L19.5 7V15L11 20L2.5 15V7L11 2Z" fill="rgba(15,17,23,0.9)"/></svg>
+    </div>
+
+    <h2 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#F0F2F5;margin:0 0 6px 0;letter-spacing:-0.5px;">Welcome back</h2>
+    <p style="color:rgba(240,242,245,0.4);font-size:14px;margin:0 0 36px 0;font-weight:400;">Sign in to continue your session</p>
+
+    <!-- Email -->
+    <div style="margin-bottom:16px;">
+      <label style="display:block;font-size:12px;font-weight:600;color:rgba(240,242,245,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Email</label>
+      <input
+        id="email"
+        placeholder="you@example.com"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#F0F2F5;font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;"
+        onfocus="this.style.borderColor='#00D4AA';this.style.boxShadow='0 0 0 3px rgba(0,212,170,0.12)'"
+        onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow='none'"
+      >
+    </div>
+
+    <!-- Password -->
+    <div style="margin-bottom:28px;">
+      <label style="display:block;font-size:12px;font-weight:600;color:rgba(240,242,245,0.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Password</label>
+      <input
+        id="password"
+        placeholder="••••••••"
+        type="password"
+        style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#F0F2F5;font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;"
+        onfocus="this.style.borderColor='#00D4AA';this.style.boxShadow='0 0 0 3px rgba(0,212,170,0.12)'"
+        onblur="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow='none'"
+      >
+    </div>
+
+    <!-- Button -->
+    <button
+      onclick="login()"
+      style="width:100%;padding:15px;background:linear-gradient(135deg,#FF6B6B,#e05555);border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:0.2px;transition:opacity 0.2s,transform 0.15s,box-shadow 0.2s;box-shadow:0 8px 24px rgba(255,107,107,0.3);"
+      onmouseover="this.style.opacity='0.9';this.style.transform='translateY(-1px)';this.style.boxShadow='0 12px 28px rgba(255,107,107,0.4)'"
+      onmouseout="this.style.opacity='1';this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(255,107,107,0.3)'"
+      onmousedown="this.style.transform='translateY(1px)'"
+      onmouseup="this.style.transform='translateY(-1px)'"
+    >Sign In</button>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:12px;margin:24px 0;">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
+      <span style="color:rgba(240,242,245,0.25);font-size:12px;">or</span>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,0.07);"></div>
+    </div>
+
+    <p style="text-align:center;margin:0;font-size:14px;color:rgba(240,242,245,0.4);">
+      Don't have an account?
+      <a href="register.html" style="color:#00D4AA;text-decoration:none;font-weight:600;margin-left:4px;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Create one</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+function login() {
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            email: emailInput.value,
+            password: passwordInput.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (!data || !data.user) {
+            throw new Error("Invalid login response");
+        }
+
+        localStorage.setItem("token", data.token || "");
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        console.log('User role:', data.user.role);
+        if (data.user.role && data.user.role.toUpperCase() === "RECRUITER") {
+            window.location.href = "recruiter.html";
+        } else {
+            window.location.href = "jobs.html";
+        }
+    }).catch(err => alert('Login failed: ' + err));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: #0F1117;
+    background-image:
+      radial-gradient(ellipse 90% 50% at 50% -5%, rgba(0,212,170,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 95% 80%, rgba(255,107,107,0.09) 0%, transparent 55%);
+    font-family: 'DM Sans', sans-serif;
+    color: #F0F2F5;
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: rgba(15,17,23,0.85);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 9px; }
+  .nav-logo {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #FF6B6B, #00D4AA);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.3px; }
+  .nav-btn {
+    padding: 8px 16px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-ghost {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(240,242,245,0.7);
+  }
+  .nav-ghost:hover { background: rgba(255,255,255,0.09); color: #F0F2F5; }
+  .nav-danger {
+    background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); color: #FF6B6B;
+  }
+  .nav-danger:hover { background: rgba(255,107,107,0.15); }
+
+  /* HERO */
+  .hero {
+    max-width: 920px; margin: 0 auto;
+    padding: 52px 28px 36px;
+    display: flex; align-items: flex-end; gap: 28px;
+    animation: fadeUp 0.4s ease both;
+  }
+  .avatar {
+    width: 96px; height: 96px; border-radius: 26px;
+    background: linear-gradient(135deg, #1c1f2e, #252836);
+    border: 2px solid rgba(255,255,255,0.09);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800;
+    flex-shrink: 0; position: relative; overflow: hidden;
+  }
+  .avatar::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,107,107,0.18), rgba(0,212,170,0.12));
+  }
+  .avatar-text { position: relative; z-index: 1; }
+  .hero-name {
+    font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
+    letter-spacing: -1px; line-height: 1.1; margin-bottom: 10px;
+  }
+  .hero-sub { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .hero-email { font-size: 14px; color: rgba(240,242,245,0.38); }
+  .role-pill {
+    padding: 4px 12px; border-radius: 20px;
+    background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25);
+    color: #00D4AA; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .divider {
+    max-width: 920px; margin: 0 auto; padding: 0 28px;
+    border: none; border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  /* GRID */
+  .grid {
+    max-width: 920px; margin: 0 auto;
+    padding: 28px 28px 60px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+    align-items: start;
+    animation: fadeUp 0.45s 0.07s ease both;
+  }
+
+  .panel {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 26px;
+  }
+  .panel + .panel { margin-top: 16px; }
+  .panel-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.3px;
+    text-transform: uppercase; color: rgba(240,242,245,0.3);
+    margin-bottom: 18px;
+  }
+
+  /* SKILL CHIPS */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 38px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 11px; border-radius: 8px;
+    background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2);
+    color: #00D4AA; font-size: 13px; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .chip:hover { background: rgba(0,212,170,0.17); }
+  .chip-x {
+    background: none; border: none; cursor: pointer; padding: 0;
+    color: rgba(0,212,170,0.45); font-size: 17px; line-height: 1;
+    transition: color 0.15s;
+  }
+  .chip-x:hover { color: #FF6B6B; }
+  .no-skill { font-size: 13px; color: rgba(240,242,245,0.22); font-style: italic; align-self: center; }
+
+  /* ADDER */
+  .adder { display: flex; gap: 8px; margin-top: 14px; }
+  .adder-input {
+    flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 10px 14px;
+    color: #F0F2F5; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .adder-input:focus { border-color: #00D4AA; box-shadow: 0 0 0 3px rgba(0,212,170,0.12); }
+  .adder-input::placeholder { color: rgba(240,242,245,0.22); }
+  .btn-teal {
+    padding: 10px 16px; border-radius: 10px; white-space: nowrap; cursor: pointer;
+    background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3); color: #00D4AA;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-teal:hover { background: rgba(0,212,170,0.2); transform: translateY(-1px); }
+  .btn-teal:active { transform: translateY(0); }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .stat {
+    padding: 18px; border-radius: 16px; text-align: center;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  }
+  .stat-n {
+    font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stat-n.teal { color: #00D4AA; }
+  .stat-l { font-size: 11px; color: rgba(240,242,245,0.28); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  /* UPLOAD */
+  .drop-zone {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 26px 16px; border-radius: 14px; cursor: pointer; text-align: center;
+    background: rgba(255,255,255,0.02); border: 1.5px dashed rgba(255,255,255,0.1);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: rgba(0,212,170,0.45); background: rgba(0,212,170,0.04);
+  }
+  .drop-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: rgba(0,212,170,0.1); display: flex; align-items: center; justify-content: center;
+  }
+  .drop-text { font-size: 13px; color: rgba(240,242,245,0.45); line-height: 1.5; }
+  .drop-text em { color: #00D4AA; font-style: normal; font-weight: 600; }
+  .drop-hint { font-size: 11px; color: rgba(240,242,245,0.2); }
+  .file-chosen { display: none; font-size: 12px; color: rgba(240,242,245,0.35); text-align: center; word-break: break-all; margin-top: 6px; }
+
+  .status-bar {
+    display: none; align-items: center; gap: 8px;
+    padding: 10px 14px; margin-top: 12px; border-radius: 10px;
+    background: rgba(0,212,170,0.07); border: 1px solid rgba(0,212,170,0.18);
+    font-size: 13px; color: #00D4AA;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin {
+    width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid rgba(0,212,170,0.25); border-top-color: #00D4AA;
+    animation: spin 0.7s linear infinite;
+  }
+
+  .btn-red {
+    width: 100%; padding: 13px; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, #FF6B6B, #e05555); color: #fff;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(255,107,107,0.28);
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-red:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 10px 26px rgba(255,107,107,0.38); }
+  .btn-red:active { transform: translateY(0); }
+  .btn-red:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .btn-outline-red {
+    width: 100%; padding: 12px; background: transparent;
+    border: 1px solid rgba(255,107,107,0.25); border-radius: 12px;
+    color: #FF6B6B; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-outline-red:hover { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.45); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { flex-direction: column; align-items: flex-start; gap: 16px; }
+    nav { padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><path d="M11 2L19.5 7V15L11 20L2.5 15V7L11 2Z" fill="rgba(15,17,23,0.9)"/></svg>
+    </div>
+    <span class="nav-title">JobBoard</span>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <a href="jobs.html" class="nav-btn nav-ghost">Browse Jobs</a>
+    <button onclick="logout()" class="nav-btn nav-danger">Sign Out</button>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<div class="hero">
+  <div class="avatar"><span class="avatar-text" id="avatarInitial">?</span></div>
+  <div>
+    <div class="hero-name" id="heroName">—</div>
+    <div class="hero-sub">
+      <span class="hero-email" id="heroEmail"></span>
+      <span class="role-pill" id="heroBadge"></span>
+    </div>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- LEFT -->
+  <div>
+    <!-- Skills panel -->
+    <div class="panel">
+      <div class="panel-label">Skills</div>
+      <div class="chips" id="chipsWrap">
+        <span class="no-skill">No skills yet — upload resume or add below</span>
+      </div>
+      <div class="adder">
+        <input class="adder-input" id="skillInput" placeholder="e.g. Python, Figma, AWS…" onkeydown="if(event.key==='Enter') addSkill()">
+        <button class="btn-teal" onclick="addSkill()">+ Add</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-n teal" id="statSkills">0</div>
+        <div class="stat-l">Skills</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" id="statRole">—</div>
+        <div class="stat-l">Role</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="panel">
+      <div class="panel-label">Resume Upload</div>
+
+      <label for="resume">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 4v13M12 4l-4 4M12 4l4 4" stroke="#00D4AA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 20h16" stroke="#00D4AA" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+            </svg>
+          </div>
+          <div class="drop-text">Drop resume here or <em>browse</em></div>
+          <div class="drop-hint">.txt · .pdf supported</div>
+        </div>
+      </label>
+      <input type="file" id="resume" accept=".txt,.pdf" style="display:none;" onchange="onFileChosen(this)">
+      <div class="file-chosen" id="fileChosen"></div>
+
+      <div class="status-bar" id="statusBar">
+        <div class="spin" id="statusSpin" style="display:none;"></div>
+        <svg id="statusCheck" width="15" height="15" viewBox="0 0 16 16" fill="none" style="display:none;flex-shrink:0;">
+          <path d="M3 8l3.5 3.5L13 5" stroke="#00D4AA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="statusMsg"></span>
+      </div>
+
+      <button class="btn-red" id="uploadBtn" onclick="upload()" style="margin-top:14px;" disabled>Extract Skills from Resume</button>
+    </div>
+
+    <button class="btn-outline-red" onclick="logout()">Sign Out</button>
+  </div>
+
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) {
+    alert('Please login');
+    window.location.href = 'login.html';
+}
+
+// Render hero
+const initials = (user.name || 'U').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+document.getElementById('avatarInitial').textContent = initials;
+document.getElementById('heroName').textContent = user.name || 'Unknown';
+document.getElementById('heroEmail').textContent = user.email || '';
+document.getElementById('heroBadge').textContent = user.role || 'UNKNOWN';
+document.getElementById('statRole').textContent = (user.role || '—').slice(0,3);
+renderSkills();
+
+// Skills helpers
+function getSkills() {
+    if (!user.skills || !user.skills.trim()) return [];
+    return user.skills.split(',').map(s => s.trim()).filter(Boolean);
+}
+function saveSkills(arr) {
+    user.skills = arr.join(',');
+    localStorage.setItem('user', JSON.stringify(user));
+    renderSkills();
+
+    if (user && user.id) {
+        fetch("http://localhost:8080/api/profile-skills", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                userId: user.id,
+                skills: arr
+            })
+        }).catch(() => {});
+    }
+}
+function renderSkills() {
+    const wrap = document.getElementById('chipsWrap');
+    const skills = getSkills();
+    document.getElementById('statSkills').textContent = skills.length;
+    if (!skills.length) {
+        wrap.innerHTML = '<span class="no-skill">No skills yet — upload resume or add below</span>';
+        return;
+    }
+    wrap.innerHTML = skills.map((s, i) => `
+      <div class="chip">
+        ${s}
+        <button class="chip-x" onclick="removeSkill(${i})" title="Remove">×</button>
+      </div>`).join('');
+}
+function addSkill() {
+    const input = document.getElementById('skillInput');
+    const val = input.value.trim().toLowerCase();
+    if (!val) return;
+    const skills = getSkills();
+    if (!skills.includes(val)) { skills.push(val); saveSkills(skills); }
+    input.value = '';
+    input.focus();
+}
+function removeSkill(i) {
+    const skills = getSkills(); skills.splice(i, 1); saveSkills(skills);
+}
+
+// File chosen
+let chosenFile = null;
+function onFileChosen(input) {
+    chosenFile = input.files[0];
+    if (!chosenFile) return;
+    const fc = document.getElementById('fileChosen');
+    fc.style.display = 'block';
+    fc.textContent = '📄 ' + chosenFile.name;
+    document.getElementById('uploadBtn').disabled = false;
+    document.getElementById('statusBar').style.display = 'none';
+}
+
+// Drag & drop
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+dz.addEventListener('drop', e => {
+    e.preventDefault(); dz.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+        const dt = new DataTransfer(); dt.items.add(file);
+        document.getElementById('resume').files = dt.files;
+        onFileChosen(document.getElementById('resume'));
+    }
+});
+
+// Upload & parse
+function upload() {
+    const file = chosenFile || document.getElementById('resume').files[0];
+    if (!file) return alert('Select a file first');
+
+    const bar = document.getElementById('statusBar');
+    const spin = document.getElementById('statusSpin');
+    const check = document.getElementById('statusCheck');
+    const msg = document.getElementById('statusMsg');
+
+    bar.style.display = 'flex'; spin.style.display = 'block'; check.style.display = 'none';
+    msg.textContent = 'Parsing resume…';
+    document.getElementById('uploadBtn').disabled = true;
+
+    if (file.name.toLowerCase().endsWith('.pdf')) {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            try {
+                const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
+                let fullText = '';
+                for (let p = 1; p <= pdf.numPages; p++) {
+                    const page = await pdf.getPage(p);
+                    const content = await page.getTextContent();
+                    fullText += content.items.map(i => i.str).join(' ') + ' ';
+                }
+                extractAndSave(fullText);
+            } catch(err) {
+                spin.style.display = 'none';
+                msg.textContent = 'PDF parse error: ' + err.message;
+                document.getElementById('uploadBtn').disabled = false;
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        const reader = new FileReader();
+        reader.onload = function(e) { extractAndSave(e.target.result); };
+        reader.readAsText(file);
+    }
+}
+
+function extractAndSave(text) {
+    const lower = text.toLowerCase();
+
+    const KEYWORDS = [
+        "javascript","typescript","python","java","kotlin","swift","go","golang","rust",
+        "c++","c#","php","ruby","scala","dart","elixir","bash","shell",
+        "react","vue","angular","svelte","nextjs","nuxt","gatsby","html","css","sass","tailwind","bootstrap",
+        "node","express","django","flask","fastapi","spring","laravel","rails",
+        "sql","mysql","postgresql","mongodb","redis","elasticsearch","firebase","sqlite",
+        "docker","kubernetes","aws","gcp","azure","terraform","ansible","jenkins","git","linux","nginx",
+        "graphql","rest","grpc","figma","photoshop","illustrator","sketch","blender","canva",
+        "machine learning","deep learning","tensorflow","pytorch","scikit-learn","nlp","computer vision",
+        "agile","scrum","jira","confluence","notion","trello","asana","tableau","power bi",
+        "driver","electrician","plumbing","carpentry","welding","hvac","networking","cisco","excel","seo",
+        "leadership","management","communication","teamwork","problem solving","java"
+    ];
+
+    const existing = getSkills();
+    const found = [...new Set(KEYWORDS.filter(k => lower.includes(k) && !existing.includes(k)))];
+    const merged = [...existing, ...found];
+
+    const spin = document.getElementById('statusSpin');
+    const check = document.getElementById('statusCheck');
+    const msg = document.getElementById('statusMsg');
+
+    spin.style.display = 'none'; check.style.display = 'block';
+    msg.textContent = found.length
+        ? `Added ${found.length} skill${found.length > 1 ? 's' : ''}: ${found.join(', ')}`
+        : 'No new skills found — try adding manually';
+    document.getElementById('uploadBtn').disabled = false;
+
+    // Original logic preserved
+    user.skills = merged.join(',');
+    localStorage.setItem("user", JSON.stringify(user));
+    saveSkills(merged);
+}
+
+function loadPersistedSkills() {
+    if (!user || !user.id) return;
+    fetch("http://localhost:8080/api/profile-skills/" + user.id)
+        .then(res => res.json())
+        .then(data => {
+            if (data && Array.isArray(data.skills)) {
+                user.skills = data.skills.join(",");
+                localStorage.setItem("user", JSON.stringify(user));
+                renderSkills();
+            }
+        })
+        .catch(() => {});
+}
+
+function logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
+}
+
+loadPersistedSkills();
+</script>
+
+</body>
+</html>

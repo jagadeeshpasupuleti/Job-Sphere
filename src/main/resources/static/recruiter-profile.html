@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiter HQ Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: #F0F2F5;
+    background:
+      radial-gradient(circle at 20% -10%, rgba(0,212,170,0.18), transparent 45%),
+      radial-gradient(circle at 90% 110%, rgba(255,107,107,0.18), transparent 40%),
+      #0B0D13;
+  }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(11,13,19,0.85);
+    backdrop-filter: blur(14px);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .logo {
+    width: 32px; height: 32px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg,#FF6B6B,#00D4AA);
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .actions { display: flex; gap: 8px; }
+  .btn {
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: #F0F2F5;
+    text-decoration: none;
+    font-size: 13px;
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn:hover { background: rgba(255,255,255,0.12); }
+  .btn-danger {
+    border-color: rgba(255,107,107,0.35);
+    color: #FF6B6B;
+    background: rgba(255,107,107,0.08);
+  }
+
+  .layout {
+    max-width: 1060px;
+    margin: 26px auto 40px;
+    padding: 0 14px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 18px;
+  }
+
+  .side {
+    padding: 18px;
+    align-self: start;
+    position: sticky; top: 80px;
+  }
+  .avatar {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    background: linear-gradient(135deg, rgba(255,107,107,0.25), rgba(0,212,170,0.25));
+    border: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 12px;
+  }
+  .side h2 {
+    margin: 0 0 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.4px;
+  }
+  .side p { margin: 0; color: rgba(240,242,245,0.6); font-size: 13px; line-height: 1.5; }
+  .stat-grid {
+    margin-top: 16px;
+    display: grid; gap: 8px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat {
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .stat .n { font-family: 'Syne', sans-serif; font-size: 20px; }
+  .stat .l { color: rgba(240,242,245,0.5); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .main {
+    padding: 18px;
+  }
+  .heading {
+    margin: 0 0 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: 30px;
+    letter-spacing: -0.7px;
+  }
+  .sub {
+    margin: 0 0 18px;
+    color: rgba(240,242,245,0.6);
+    font-size: 14px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    color: rgba(240,242,245,0.55);
+    font-weight: 700;
+  }
+  .input, .textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    padding: 11px 12px;
+    color: #F0F2F5;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+  }
+  .input:focus, .textarea:focus {
+    border-color: #00D4AA;
+    box-shadow: 0 0 0 3px rgba(0,212,170,0.13);
+  }
+  .textarea { min-height: 110px; resize: vertical; }
+  .full { grid-column: 1 / -1; }
+
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;
+  }
+  .chip {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,212,170,0.35);
+    color: #00D4AA;
+    background: rgba(0,212,170,0.1);
+  }
+
+  .footer {
+    margin-top: 14px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hint {
+    color: rgba(240,242,245,0.45);
+    font-size: 12px;
+  }
+  .save {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 14px; font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg,#FF6B6B,#e05555);
+    box-shadow: 0 8px 24px rgba(255,107,107,0.28);
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><path d="M11 2L19.5 7V15L11 20L2.5 15V7L11 2Z" fill="rgba(15,17,23,0.9)"/></svg>
+      </div>
+      <h1>Recruiter HQ</h1>
+    </div>
+    <div class="actions">
+      <a class="btn" href="recruiter.html">Dashboard</a>
+      <a class="btn btn-danger" href="#" onclick="logout(); return false;">Logout</a>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="card side">
+      <div class="avatar" id="avatar">R</div>
+      <h2 id="sideName">Recruiter</h2>
+      <p id="sideEmail">work@email.com</p>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="n" id="sCompany">—</div>
+          <div class="l">Company</div>
+        </div>
+        <div class="stat">
+          <div class="n" id="sSkills">0</div>
+          <div class="l">Hiring Skills</div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="card main">
+      <h2 class="heading">Recruiter Profile</h2>
+      <p class="sub">This page is dedicated to recruiter/company information only.</p>
+
+      <div class="grid">
+        <div class="field">
+          <label class="label">Full Name</label>
+          <input id="fullName" class="input" />
+        </div>
+        <div class="field">
+          <label class="label">Work Email</label>
+          <input id="workEmail" class="input" />
+        </div>
+        <div class="field">
+          <label class="label">Company Name</label>
+          <input id="companyName" class="input" />
+        </div>
+        <div class="field">
+          <label class="label">Designation</label>
+          <input id="designation" class="input" placeholder="e.g. Senior Technical Recruiter" />
+        </div>
+        <div class="field">
+          <label class="label">Company Website</label>
+          <input id="companyWebsite" class="input" placeholder="https://company.com" />
+        </div>
+        <div class="field">
+          <label class="label">Hiring Domains / Skills</label>
+          <input id="hiringSkills" class="input" placeholder="java, react, devops" oninput="previewHiringSkills(this.value)" />
+          <div id="skillsPreview" class="chips"></div>
+        </div>
+        <div class="field full">
+          <label class="label">Recruiter Bio</label>
+          <textarea id="bio" class="textarea" placeholder="Describe hiring scope, teams, and opportunities"></textarea>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="hint">Stored as: <code>recruiterProfile_<userId></code></div>
+        <button class="save" onclick="saveRecruiterProfile()">Save Recruiter Profile</button>
+      </div>
+    </section>
+  </div>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user || !user.id) {
+  alert("Please login first");
+  window.location.href = "login.html";
+}
+
+const storageKey = `recruiterProfile_${user.id}`;
+
+function initials(text) {
+  if (!text) return "R";
+  return text.trim().split(/\s+/).map(x => x[0]).join("").slice(0,2).toUpperCase();
+}
+
+function previewHiringSkills(raw) {
+  const list = raw.split(",").map(s => s.trim()).filter(Boolean);
+  document.getElementById("skillsPreview").innerHTML = list.map(s => `<span class="chip">${s}</span>`).join("");
+  document.getElementById("sSkills").textContent = list.length;
+}
+
+function refreshSidePanel() {
+  const fullName = document.getElementById("fullName").value.trim() || user.name || "Recruiter";
+  const workEmail = document.getElementById("workEmail").value.trim() || user.email || "work@email.com";
+  const company = document.getElementById("companyName").value.trim();
+  const hiringSkills = document.getElementById("hiringSkills").value.trim();
+
+  document.getElementById("avatar").textContent = initials(fullName);
+  document.getElementById("sideName").textContent = fullName;
+  document.getElementById("sideEmail").textContent = workEmail;
+  document.getElementById("sCompany").textContent = company ? company.slice(0, 10) : "—";
+
+  previewHiringSkills(hiringSkills);
+}
+
+function loadRecruiterProfile() {
+  const raw = localStorage.getItem(storageKey);
+  const data = raw ? JSON.parse(raw) : {};
+
+  document.getElementById("fullName").value = data.fullName || user.name || "";
+  document.getElementById("workEmail").value = data.workEmail || user.email || "";
+  document.getElementById("companyName").value = data.companyName || "";
+  document.getElementById("designation").value = data.designation || "";
+  document.getElementById("companyWebsite").value = data.companyWebsite || "";
+  document.getElementById("hiringSkills").value = data.hiringSkills || "";
+  document.getElementById("bio").value = data.bio || "";
+
+  refreshSidePanel();
+}
+
+function saveRecruiterProfile() {
+  const data = {
+    userId: user.id,
+    fullName: document.getElementById("fullName").value.trim(),
+    workEmail: document.getElementById("workEmail").value.trim(),
+    companyName: document.getElementById("companyName").value.trim(),
+    designation: document.getElementById("designation").value.trim(),
+    companyWebsite: document.getElementById("companyWebsite").value.trim(),
+    hiringSkills: document.getElementById("hiringSkills").value.trim(),
+    bio: document.getElementById("bio").value.trim(),
+    updatedAt: new Date().toISOString()
+  };
+
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  refreshSidePanel();
+  alert("Recruiter profile saved.");
+}
+
+["fullName","workEmail","companyName","hiringSkills"].forEach(id => {
+  document.getElementById(id).addEventListener("input", refreshSidePanel);
+});
+
+function logout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  window.location.href = "index.html";
+}
+
+loadRecruiterProfile();
+</script>
+</body>
+</html>
